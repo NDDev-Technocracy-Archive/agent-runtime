@@ -83,8 +83,8 @@ func (contract Contract) Validate() error {
 	want := []RequiredCheck{
 		{Context: "Analyze (go)", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214507, Event: "dynamic"},
 		{Context: "govulncheck", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214464, Event: "pull_request"},
-		{Context: "test (macos-latest)", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214464, Event: "pull_request"},
-		{Context: "test (ubuntu-latest)", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214464, Event: "pull_request"},
+		{Context: "test (macos-26)", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214464, Event: "pull_request"},
+		{Context: "test (ubuntu-26.04)", AppID: 15368, AppNodeID: "MDM6QXBwMTUzNjg=", AppSlug: "github-actions", WorkflowID: 333214464, Event: "pull_request"},
 	}
 	checks := append([]RequiredCheck(nil), contract.RequiredChecks...)
 	sort.Slice(checks, func(i, j int) bool { return checks[i].Context < checks[j].Context })

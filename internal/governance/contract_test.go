@@ -84,13 +84,13 @@ func TestSnapshotRejectsRequiredCheckAndSettingsDrift(t *testing.T) {
 		}, "specific reviewer set"},
 		{"check dropped", func(s *Snapshot) {
 			mutateRuleParameter(t, &s.Rulesets[0], "required_status_checks", "required_status_checks", []any{
-				map[string]any{"context": "test (ubuntu-latest)", "integration_id": float64(15368)},
+				map[string]any{"context": "test (ubuntu-26.04)", "integration_id": float64(15368)},
 			})
 		}, "requires 1 checks"},
 		{"check app swapped", func(s *Snapshot) {
 			mutateRuleParameter(t, &s.Rulesets[0], "required_status_checks", "required_status_checks", []any{
-				map[string]any{"context": "test (ubuntu-latest)", "integration_id": float64(15368)},
-				map[string]any{"context": "test (macos-latest)", "integration_id": float64(15368)},
+				map[string]any{"context": "test (ubuntu-26.04)", "integration_id": float64(15368)},
+				map[string]any{"context": "test (macos-26)", "integration_id": float64(15368)},
 				map[string]any{"context": "govulncheck", "integration_id": float64(15368)},
 				map[string]any{"context": "Analyze (go)", "integration_id": float64(99)},
 			})
@@ -163,7 +163,7 @@ func TestWorkflowRejectsTriggerPathAndJobGaps(t *testing.T) {
 			return strings.Replace(s, "  govulncheck:\n", "  govulncheck:\n    name: security\n", 1)
 		}, "stable check name"},
 		{"matrix gap", func(s string) string {
-			return strings.Replace(s, "os: [ubuntu-latest, macos-latest]", "os: [ubuntu-latest]", 1)
+			return strings.Replace(s, "os: [ubuntu-26.04, macos-26]", "os: [ubuntu-26.04]", 1)
 		}, "does not declare"},
 	}
 	for _, tc := range tests {

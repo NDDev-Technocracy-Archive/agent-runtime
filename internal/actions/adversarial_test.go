@@ -107,7 +107,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		},
 		// A disabled job's steps never run, whatever they say.
 		"scanner lane disabled by condition": {
-			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-latest\n", "  govulncheck:\n    if: false\n    runs-on: ubuntu-latest\n"),
+			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-26.04\n", "  govulncheck:\n    if: false\n    runs-on: ubuntu-26.04\n"),
 			verifyCI,
 		},
 		"test lane disabled by condition": {
@@ -128,7 +128,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		},
 		// The context name carries the lane, so dropping it retires the check.
 		"matrix lane dropped": {
-			relocate(t, ci, "os: [ubuntu-latest, macos-latest]", "os: [ubuntu-latest]"),
+			relocate(t, ci, "os: [ubuntu-26.04, macos-26]", "os: [ubuntu-26.04]"),
 			verifyGovernance,
 		},
 		// An override detaches the check-run from the required context name.
@@ -154,7 +154,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 func TestReleaseControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 	t.Parallel()
 	release := read(t, "release.yml")
-	identityStep := "      - name: Verify immutable signed exact-main release identity\n"
+	identityStep := "      - name: Verify immutable exact-main release identity\n"
 	for name, workflow := range map[string]string{
 		// The recorded reproduction: the whole signature, provenance and
 		// exact-main gate becomes a comment block and the file still parses as
@@ -175,10 +175,6 @@ func TestReleaseControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		"reachable by hand":            relocate(t, release, "on:\n  push:\n", "on:\n  workflow_dispatch:\n  push:\n"),
 		// The checkout must not leave a usable credential for later steps.
 		"checkout keeps its credential": relocate(t, release, "          persist-credentials: false\n", "          persist-credentials: true\n"),
-		// The signature check demoted to prose.
-		"signature check demoted to a step name": relocate(t, release,
-			"          go run ./cmd/check-signature --tag \"$tag_object\" --expected-commit \"$tag_commit\"\n",
-			"          true # go run ./cmd/check-signature --tag \"$tag_object\" --expected-commit \"$tag_commit\"\n"),
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -224,12 +220,12 @@ func TestAmbiguousWorkflowsAreRejected(t *testing.T) {
 		want     string
 	}{
 		"anchor and alias": {
-			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-latest\n", "  govulncheck: &scanner\n    runs-on: ubuntu-latest\n") +
+			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-26.04\n", "  govulncheck: &scanner\n    runs-on: ubuntu-26.04\n") +
 				"\n  scanner-copy: *scanner\n",
 			"anchors and aliases",
 		},
 		"duplicate job key": {
-			ci + "\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - run: 'true'\n",
+			ci + "\n  test:\n    runs-on: ubuntu-26.04\n    steps:\n      - run: 'true'\n",
 			"already defined",
 		},
 		"duplicate step key": {

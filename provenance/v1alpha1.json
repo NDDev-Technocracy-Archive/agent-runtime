@@ -19,7 +19,7 @@
   "required_checks": [
     {"context": "Analyze (go)", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214507, "event": "dynamic"},
     {"context": "govulncheck", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214464, "event": "pull_request"},
-    {"context": "test (macos-latest)", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214464, "event": "pull_request"},
-    {"context": "test (ubuntu-latest)", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214464, "event": "pull_request"}
+    {"context": "test (macos-26)", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214464, "event": "pull_request"},
+    {"context": "test (ubuntu-26.04)", "app_id": 15368, "app_node_id": "MDM6QXBwMTUzNjg=", "app_slug": "github-actions", "workflow_id": 333214464, "event": "pull_request"}
   ]
 }

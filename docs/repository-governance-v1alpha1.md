@@ -8,8 +8,8 @@ The contract requires all main changes to arrive through a pull request, with
 strict status checks tied to the GitHub Actions integration that produced the
 successful PR and main evidence:
 
-- `test (ubuntu-latest)`;
-- `test (macos-latest)`;
+- `test (ubuntu-26.04)`;
+- `test (macos-26)`;
 - `govulncheck`;
 - `Analyze (go)`.
 

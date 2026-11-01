@@ -30,7 +30,7 @@
         "type": "object", "additionalProperties": false,
         "required": ["context", "app_id", "app_node_id", "app_slug", "workflow_id", "event"],
         "properties": {
-          "context": {"enum": ["Analyze (go)", "govulncheck", "test (macos-latest)", "test (ubuntu-latest)"]},
+          "context": {"enum": ["Analyze (go)", "govulncheck", "test (macos-26)", "test (ubuntu-26.04)"]},
           "app_id": {"const": 15368},
           "app_node_id": {"const": "MDM6QXBwMTUzNjg="},
           "app_slug": {"const": "github-actions"},
