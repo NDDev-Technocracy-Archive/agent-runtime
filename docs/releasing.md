@@ -1,5 +1,10 @@
 # Releasing the Go module/source product
 
+> Since 2026-11-01 (owner decision) neither CI nor the release workflow requires
+> commit or tag signatures from a specific key. The release still binds the tag to
+> the exact `main` head and the release contract. `cmd/check-signature` and
+> `cmd/check-provenance` remain available for the optional manual checks below.
+
 `release/v1alpha1.json` is the only release source of truth. The version it
 currently names is `v0.2.0`; the compatibility declaration is Go 1.25. `v0.1.2`
 was the first published release. `v0.1.0` and `v0.1.1` were tagged but never

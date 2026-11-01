@@ -154,7 +154,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 func TestReleaseControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 	t.Parallel()
 	release := read(t, "release.yml")
-	identityStep := "      - name: Verify immutable signed exact-main release identity\n"
+	identityStep := "      - name: Verify immutable exact-main release identity\n"
 	for name, workflow := range map[string]string{
 		// The recorded reproduction: the whole signature, provenance and
 		// exact-main gate becomes a comment block and the file still parses as
@@ -175,10 +175,6 @@ func TestReleaseControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		"reachable by hand":            relocate(t, release, "on:\n  push:\n", "on:\n  workflow_dispatch:\n  push:\n"),
 		// The checkout must not leave a usable credential for later steps.
 		"checkout keeps its credential": relocate(t, release, "          persist-credentials: false\n", "          persist-credentials: true\n"),
-		// The signature check demoted to prose.
-		"signature check demoted to a step name": relocate(t, release,
-			"          go run ./cmd/check-signature --tag \"$tag_object\" --expected-commit \"$tag_commit\"\n",
-			"          true # go run ./cmd/check-signature --tag \"$tag_object\" --expected-commit \"$tag_commit\"\n"),
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

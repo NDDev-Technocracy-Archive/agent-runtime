@@ -213,22 +213,17 @@ func TestRepositorySurfacesUseOnlyCanonicalSignatureVerifier(t *testing.T) {
 		required []string
 		count    int
 	}{
+		// CI and release no longer require commit or tag signatures (owner
+		// decision 2026-11-01); the verifier remains for manual checks.
 		"CI": {
-			path: filepath.Join(root, ".github", "workflows", "ci.yml"),
-			required: []string{
-				`go run ./cmd/check-signature --commit "$EXPECTED_COMMIT"`,
-				`${{ github.event.pull_request.head.sha || github.sha }}`,
-				"fetch-depth: 0",
-			},
-			count: 1,
+			path:     filepath.Join(root, ".github", "workflows", "ci.yml"),
+			required: []string{},
+			count:    0,
 		},
 		"release": {
-			path: filepath.Join(root, ".github", "workflows", "release.yml"),
-			required: []string{
-				`go run ./cmd/check-signature --tag "$tag_object" --expected-commit "$tag_commit"`,
-				`tag_object="$(git rev-parse "$RELEASE_TAG^{tag}")"`,
-			},
-			count: 1,
+			path:     filepath.Join(root, ".github", "workflows", "release.yml"),
+			required: []string{},
+			count:    0,
 		},
 		"docs": {
 			path: filepath.Join(root, "docs", "releasing.md"),

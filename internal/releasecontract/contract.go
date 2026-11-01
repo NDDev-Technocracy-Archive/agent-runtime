@@ -22,7 +22,6 @@ import (
 	"golang.org/x/mod/module"
 
 	"github.com/NDDev-it-com/agent-runtime/internal/actions"
-	"github.com/NDDev-it-com/agent-runtime/internal/provenance"
 	"github.com/NDDev-it-com/agent-runtime/internal/signatureverify"
 )
 
@@ -355,8 +354,7 @@ func (c Contract) VerifyWorkflow(data []byte) error {
 	// Commands the lane is named after. Each must be in an executed script.
 	for _, command := range []string{
 		"go run ./cmd/check-release-contract", "go run ./cmd/check-cold-compile",
-		"go run ./cmd/check-signature --tag", provenance.IntegrationCommand,
-		"--expected-commit", "verification.verified", "refs/heads/main",
+		`test "$tag_commit" = "$(git rev-parse HEAD)"`, "refs/heads/main",
 		"gh release create", "--verify-tag", "--expect-version",
 		`release_parent="$(mktemp -d)"`, `release_dist="${release_parent}/release-dist"`,
 		`release_result="${release_parent}/build-result.json"`, `--out "$release_dist"`,

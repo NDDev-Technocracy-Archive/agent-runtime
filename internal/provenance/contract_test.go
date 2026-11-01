@@ -34,12 +34,15 @@ func TestCanonicalContract(t *testing.T) {
 func TestRepositorySurfacesUseCanonicalProvenanceVerifier(t *testing.T) {
 	t.Parallel()
 	root := filepath.Join("..", "..")
+	// CI and release no longer gate on commit signatures (owner decision
+	// 2026-11-01); the integration verifier stays available for manual use and
+	// documented, and no surface may fork an ambient verifier.
 	for _, path := range []string{filepath.Join(root, ".github", "workflows", "ci.yml"), filepath.Join(root, ".github", "workflows", "release.yml"), filepath.Join(root, "docs", "releasing.md")} {
 		data, err := os.ReadFile(path)
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !strings.Contains(string(data), IntegrationCommand) {
+		if strings.HasSuffix(path, "releasing.md") && !strings.Contains(string(data), IntegrationCommand) {
 			t.Errorf("%s omits canonical integration verifier", path)
 		}
 		for _, forbidden := range []string{"git verify-commit", "gpg --verify", "GIT_CONFIG_GLOBAL"} {

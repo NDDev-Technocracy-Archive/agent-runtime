@@ -35,7 +35,7 @@ jobs:
         with:
           go-version: '1.25.x'
           cache: false
-      - name: Verify immutable signed exact-main release identity
+      - name: Verify immutable exact-main release identity
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_REF: ${{ github.ref }}
@@ -46,16 +46,11 @@ jobs:
           go run ./cmd/check-release-contract --expect-version "$RELEASE_TAG"
           test "$(git cat-file -t "$RELEASE_TAG")" = tag
           tag_commit="$(git rev-parse "$RELEASE_TAG^{commit}")"
-          tag_object="$(git rev-parse "$RELEASE_TAG^{tag}")"
-          go run ./cmd/check-signature --tag "$tag_object" --expected-commit "$tag_commit"
-          go run ./cmd/check-provenance --integration "$tag_commit"
           test "$tag_commit" = "$(git rev-parse HEAD)"
           git fetch --no-tags origin refs/heads/main:refs/remotes/origin/main
           test "$tag_commit" = "$(git rev-parse refs/remotes/origin/main)"
           remote_tag_object="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}" --jq '.object.sha')"
           test "$remote_tag_object" = "$(git rev-parse "$RELEASE_TAG")"
-          tag_verification="$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${remote_tag_object}" --jq '.verification.verified')"
-          test "$tag_verification" = true
           # The immutable-releases setting is deliberately not read here. That
           # endpoint requires admin read access, which this job does not have and
           # must not be given: it publishes, so its token is held to contents,
