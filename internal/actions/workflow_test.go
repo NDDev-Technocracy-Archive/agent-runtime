@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-26.04, macos-26]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -33,7 +33,7 @@ jobs:
         run: go run ./cmd/never
   disabled:
     if: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     steps:
       - run: go run ./cmd/never
 `
@@ -75,7 +75,7 @@ func TestModelsTriggersJobsAndSteps(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if got := job.Matrix["os"]; len(got) != 2 || got[1] != "macos-latest" {
+	if got := job.Matrix["os"]; len(got) != 2 || got[1] != "macos-26" {
 		t.Errorf("matrix os=%v", got)
 	}
 	// The skipped step's command must not count anywhere.
@@ -132,7 +132,7 @@ func TestRejectsAmbiguousDocuments(t *testing.T) {
 	t.Parallel()
 	for name, source := range map[string]string{
 		"anchor":         strings.Replace(minimal, "  test:\n", "  test: &anchor\n", 1),
-		"duplicate key":  minimal + "  test:\n    runs-on: ubuntu-latest\n",
+		"duplicate key":  minimal + "  test:\n    runs-on: ubuntu-26.04\n",
 		"two documents":  minimal + "---\nname: second\n",
 		"not a mapping":  "- one\n- two\n",
 		"no jobs at all": "name: probe\non:\n  push:\n",

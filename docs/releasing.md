@@ -104,7 +104,7 @@ covers every other asset and deliberately does not checksum itself.
    semantics.
 6. Run full tests, race, fuzz seeds, vet, pinned `staticcheck`, formatting,
    CI/security/governance contracts and pinned `govulncheck` under the exact
-   patched Go 1.26.6 security lane. Both external tools are pinned by module
+   patched Go 1.26.10 security lane. Both external tools are pinned by module
    path and version in `security-tools.json` and verified by
    `check-ci-contract`; the linter runs on the Go 1.25 compatibility lane, so
    its own minimum Go is part of that contract. The module declaration and
@@ -115,7 +115,7 @@ covers every other asset and deliberately does not checksum itself.
    `go test -fuzz` commands are not valid or accepted.
    The security lane tracks the current patch rather than a fixed one, because
    `govulncheck` resolves the live vulnerability database: a commit that scanned
-   clean can start failing without any change to the repository. Go 1.26.6 fixes
+   clean can start failing without any change to the repository. Go 1.26.10 fixes
    [GO-2026-6218](https://pkg.go.dev/vuln/GO-2026-6218) in `net/url`,
    [GO-2026-6090](https://pkg.go.dev/vuln/GO-2026-6090) in `crypto/tls` and
    [GO-2026-5972](https://pkg.go.dev/vuln/GO-2026-5972) in `encoding/asn1`, all

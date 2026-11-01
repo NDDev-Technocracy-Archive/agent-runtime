@@ -107,7 +107,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		},
 		// A disabled job's steps never run, whatever they say.
 		"scanner lane disabled by condition": {
-			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-latest\n", "  govulncheck:\n    if: false\n    runs-on: ubuntu-latest\n"),
+			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-26.04\n", "  govulncheck:\n    if: false\n    runs-on: ubuntu-26.04\n"),
 			verifyCI,
 		},
 		"test lane disabled by condition": {
@@ -128,7 +128,7 @@ func TestControlsMovedOutOfExecutionAreRejected(t *testing.T) {
 		},
 		// The context name carries the lane, so dropping it retires the check.
 		"matrix lane dropped": {
-			relocate(t, ci, "os: [ubuntu-latest, macos-latest]", "os: [ubuntu-latest]"),
+			relocate(t, ci, "os: [ubuntu-26.04, macos-26]", "os: [ubuntu-26.04]"),
 			verifyGovernance,
 		},
 		// An override detaches the check-run from the required context name.
@@ -224,12 +224,12 @@ func TestAmbiguousWorkflowsAreRejected(t *testing.T) {
 		want     string
 	}{
 		"anchor and alias": {
-			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-latest\n", "  govulncheck: &scanner\n    runs-on: ubuntu-latest\n") +
+			relocate(t, ci, "  govulncheck:\n    runs-on: ubuntu-26.04\n", "  govulncheck: &scanner\n    runs-on: ubuntu-26.04\n") +
 				"\n  scanner-copy: *scanner\n",
 			"anchors and aliases",
 		},
 		"duplicate job key": {
-			ci + "\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - run: 'true'\n",
+			ci + "\n  test:\n    runs-on: ubuntu-26.04\n    steps:\n      - run: 'true'\n",
 			"already defined",
 		},
 		"duplicate step key": {

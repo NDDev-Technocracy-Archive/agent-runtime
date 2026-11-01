@@ -26,14 +26,14 @@
   "required_effective_rules": ["deletion", "non_fast_forward", "required_signatures"],
   "required_checks": [
     {
-      "context": "test (ubuntu-latest)",
+      "context": "test (ubuntu-26.04)",
       "integration_id": 15368,
-      "producer": {"kind": "workflow", "path": ".github/workflows/ci.yml", "job": "test", "matrix_os": "ubuntu-latest"}
+      "producer": {"kind": "workflow", "path": ".github/workflows/ci.yml", "job": "test", "matrix_os": "ubuntu-26.04"}
     },
     {
-      "context": "test (macos-latest)",
+      "context": "test (macos-26)",
       "integration_id": 15368,
-      "producer": {"kind": "workflow", "path": ".github/workflows/ci.yml", "job": "test", "matrix_os": "macos-latest"}
+      "producer": {"kind": "workflow", "path": ".github/workflows/ci.yml", "job": "test", "matrix_os": "macos-26"}
     },
     {
       "context": "govulncheck",

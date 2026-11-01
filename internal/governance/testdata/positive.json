@@ -46,11 +46,11 @@
             "do_not_enforce_on_create": false,
             "required_status_checks": [
               {
-                "context": "test (ubuntu-latest)",
+                "context": "test (ubuntu-26.04)",
                 "integration_id": 15368
               },
               {
-                "context": "test (macos-latest)",
+                "context": "test (macos-26)",
                 "integration_id": 15368
               },
               {
@@ -70,11 +70,11 @@
   ],
   "available_checks": [
     {
-      "context": "test (ubuntu-latest)",
+      "context": "test (ubuntu-26.04)",
       "integration_id": 15368
     },
     {
-      "context": "test (macos-latest)",
+      "context": "test (macos-26)",
       "integration_id": 15368
     },
     {

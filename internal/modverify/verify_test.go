@@ -257,7 +257,7 @@ func TestCanonicalModuleVerifierInvariantIsPerLane(t *testing.T) {
 	t.Parallel()
 	canonical := "go run ./cmd/check-module-tidy"
 	workflow := func(test, security string) string {
-		return "name: CI\n\non:\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n" + test + "  govulncheck:\n    runs-on: ubuntu-latest\n    steps:\n" + security
+		return "name: CI\n\non:\n  pull_request:\n\njobs:\n  test:\n    runs-on: ubuntu-26.04\n    steps:\n" + test + "  govulncheck:\n    runs-on: ubuntu-26.04\n    steps:\n" + security
 	}
 	once := "      - run: " + canonical + "\n"
 	other := "      - run: go vet ./...\n"

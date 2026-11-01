@@ -68,7 +68,7 @@
           {
             "type": "link",
             "reference": "https://github.com/NDDev-it-com/agent-runtime/pull/54",
-            "result": "Merged to main with test (ubuntu-latest), test (macos-latest), govulncheck and Analyze (go) green."
+            "result": "Merged to main with test (ubuntu-26.04), test (macos-26), govulncheck and Analyze (go) green."
           }
         ],
         "recorded_at": "2026-08-14T23:09:47.458659902Z",

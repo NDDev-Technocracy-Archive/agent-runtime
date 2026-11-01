@@ -63,11 +63,11 @@ func TestRejectsToolchainDrift(t *testing.T) {
 	workflow := canonicalCI(t)
 	for name, test := range map[string]struct{ workflow, want string }{
 		"scanner below upstream minimum": {
-			mutate(t, workflow, "go-version: '1.26.6'", "go-version: '1.24.9'"),
+			mutate(t, workflow, "go-version: '1.26.10'", "go-version: '1.24.9'"),
 			"below tool minimum",
 		},
 		"scanner not the patched security release": {
-			mutate(t, workflow, "go-version: '1.26.6'", "go-version: '1.26.4'"),
+			mutate(t, workflow, "go-version: '1.26.10'", "go-version: '1.26.4'"),
 			"patched security Go",
 		},
 		"compatibility lane drift": {
