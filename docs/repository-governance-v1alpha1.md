@@ -1,8 +1,9 @@
 # Repository governance contract v1alpha1
 
-`governance/main-v1alpha1.json` is the sole checked-in source of truth for the
-repository-owned protection of `main`. It intentionally does not copy or own
-the organization baseline rulesets that GitHub layers on top.
+`governance/main-v1alpha1.json` owns the native and CodeQL
+floor for `main`. `governance/source-ci-main.json` adds the shared source
+checks and signature enforcement without replacing those four native/security
+contexts. Neither file owns the organization baseline rulesets GitHub layers on top.
 
 The contract requires all main changes to arrive through a pull request, with
 strict status checks tied to the GitHub Actions integration that produced the
@@ -26,9 +27,10 @@ construction — neither preserves the PR head as a parent — so a change
 integrated either way reaches `main` in a state `check-provenance` must reject,
 and `docs/releasing.md` step 3 could not be satisfied. Constraining the ruleset
 is the only resolution that keeps the property provenance exists to prove.
-The validator also requires the inherited effective deletion,
-non-fast-forward, and verified-signature rules to remain present, without
-claiming ownership of their organization-level source.
+The validator also requires effective deletion,
+non-fast-forward, and verified-signature rules to remain present. The shared
+source policy supplies signature enforcement; inherited deletion and
+non-fast-forward rules retain their own organization-level source.
 
 Run the static contract and workflow check with:
 
@@ -44,7 +46,7 @@ wrong-app, inactive, bypassed, loose, or otherwise drifting state.
 Capture the live state with:
 
 ```sh
-repo=NDDev-it-com/agent-runtime
+repo=NDDev-Technocracy-Archive/agent-runtime
 branch="$(gh api "repos/$repo" --jq .default_branch)"
 {
   gh api "repos/$repo" --jq '{repository:{owner:.owner.login,name:.name,default_branch:.default_branch,allow_auto_merge:.allow_auto_merge}}'

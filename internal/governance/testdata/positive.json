@@ -1,6 +1,6 @@
 {
   "repository": {
-    "owner": "NDDev-it-com",
+    "owner": "NDDev-Technocracy-Archive",
     "name": "agent-runtime",
     "default_branch": "main",
     "allow_auto_merge": true
@@ -8,7 +8,7 @@
   "rulesets": [
     {
       "source_type": "Repository",
-      "source": "NDDev-it-com/agent-runtime",
+      "source": "NDDev-Technocracy-Archive/agent-runtime",
       "name": "agent-runtime: protect main",
       "target": "branch",
       "enforcement": "active",
@@ -104,17 +104,17 @@
     {
       "type": "deletion",
       "source_type": "Organization",
-      "source": "NDDev-it-com"
+      "source": "NDDev-Technocracy-Archive"
     },
     {
       "type": "non_fast_forward",
       "source_type": "Organization",
-      "source": "NDDev-it-com"
+      "source": "NDDev-Technocracy-Archive"
     },
     {
       "type": "required_signatures",
-      "source_type": "Organization",
-      "source": "NDDev-it-com"
+      "source_type": "Repository",
+      "source": "NDDev-Technocracy-Archive/agent-runtime"
     }
   ]
 }
