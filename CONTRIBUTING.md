@@ -3,6 +3,10 @@
 Open an issue before substantial changes so scope and compatibility can be
 agreed. Security reports must follow `SECURITY.md`.
 
+Run `just check` for build-free workflow and command-source feedback. It does not
+replace the native suite below. The shared source and merge-stop callers retain
+readonly job permissions; native tool versions remain in their existing contract.
+
 Development requires Go 1.25 or newer. Before submitting a pull request, run:
 
 ```sh

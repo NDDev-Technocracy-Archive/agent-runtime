@@ -6,6 +6,12 @@ contract.
 
 ## [Unreleased]
 
+### Changed
+
+- Retained workflow/source checks use the published shared CI caller and local
+  Just commands. Both native Go lanes and every existing release-reproduction
+  and security obligation remain unchanged.
+
 ### Removed
 
 - `actions.Job.RunStepsContaining` is gone. It was added with the workflow model

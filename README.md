@@ -232,6 +232,15 @@ reason/count pairs.
 
 ## Development
 
+`just check` runs readonly workflow and command-source checks. `just verify` also
+retains the complete committed-history secret scan. The native Linux/macOS Go
+jobs remain independent and retain every existing build, test, static-analysis,
+fuzz, module, journal, governance and deterministic archive-reproduction gate.
+The shared merge stops guard pull requests; daily security reports stay separate.
+Source maintenance does not run an agent client or publish a release.
+The two exact historical redaction-fixture exceptions in .gitleaksignore identify
+synthetic rejected inputs; later occurrences and other files remain scanned.
+
 ```sh
 go test -race ./...
 go run ./cmd/check-fuzz
@@ -252,3 +261,7 @@ contract changes are recorded in [`CHANGELOG.md`](CHANGELOG.md).
 
 Licensed under the GNU Affero General Public License v3.0 only
 (`AGPL-3.0-only`).
+
+The shared source caller declares its actionlint, Zizmor and Betterleaks release
+archives in `.github/ci-tools.json`. Archive and executable size/hash checks
+prepare the hosted job without relying on an editor machine's installed tools.

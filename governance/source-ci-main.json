@@ -1,0 +1,35 @@
+{
+  "name": "agent-runtime: shared source and signatures",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": [
+        "~DEFAULT_BRANCH"
+      ],
+      "exclude": []
+    }
+  },
+  "rules": [
+    {
+      "type": "required_status_checks",
+      "parameters": {
+        "required_status_checks": [
+          {
+            "context": "workflows / recipe",
+            "integration_id": 15368
+          },
+          {
+            "context": "merge-stops / merge stops",
+            "integration_id": 15368
+          }
+        ],
+        "strict_required_status_checks_policy": true
+      }
+    },
+    {
+      "type": "required_signatures"
+    }
+  ]
+}
