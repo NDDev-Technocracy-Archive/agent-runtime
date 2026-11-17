@@ -232,6 +232,13 @@ reason/count pairs.
 
 ## Development
 
+`just check` runs readonly workflow and command-source checks. `just verify` also
+retains the complete committed-history secret scan. The native Linux/macOS Go
+jobs remain independent and retain every existing build, test, static-analysis,
+fuzz, module, journal, governance and deterministic archive-reproduction gate.
+The shared merge stops guard pull requests; daily security reports stay separate.
+Source maintenance does not run an agent client or publish a release.
+
 ```sh
 go test -race ./...
 go run ./cmd/check-fuzz
