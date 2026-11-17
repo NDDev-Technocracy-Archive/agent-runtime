@@ -261,3 +261,7 @@ contract changes are recorded in [`CHANGELOG.md`](CHANGELOG.md).
 
 Licensed under the GNU Affero General Public License v3.0 only
 (`AGPL-3.0-only`).
+
+The shared source caller declares its actionlint, Zizmor and Betterleaks release
+archives in `.github/ci-tools.json`. Archive and executable size/hash checks
+prepare the hosted job without relying on an editor machine's installed tools.
