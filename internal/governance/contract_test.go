@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/goccy/go-yaml"
 )
 
 func TestRepositoryContractAndWorkflow(t *testing.T) {
@@ -150,19 +152,19 @@ func TestWorkflowRejectsTriggerPathAndJobGaps(t *testing.T) {
 	}
 	tests := []struct {
 		name string
-		edit func(string) string
+		edit func(*testing.T, string) string
 		want string
 	}{
-		{"missing PR", func(s string) string { return strings.Replace(s, "  pull_request:\n", "", 1) }, "every pull_request"},
-		{"path filter", func(s string) string {
+		{"missing PR", func(t *testing.T, s string) string { return withoutWorkflowTrigger(t, s, "pull_request") }, "every pull_request"},
+		{"path filter", func(t *testing.T, s string) string {
 			return strings.Replace(s, "  pull_request:\n", "  pull_request:\n    paths: ['docs/**']\n", 1)
 		}, "path filters"},
-		{"missing push", func(s string) string { return strings.Replace(s, "  push:\n    branches: [main]\n", "", 1) }, "every push to main"},
-		{"missing job", func(s string) string { return strings.Replace(s, "  govulncheck:\n", "  scanner:\n", 1) }, "govulncheck"},
-		{"renamed job", func(s string) string {
+		{"missing push", func(t *testing.T, s string) string { return withoutWorkflowTrigger(t, s, "push") }, "every push to main"},
+		{"missing job", func(t *testing.T, s string) string { return strings.Replace(s, "  govulncheck:\n", "  scanner:\n", 1) }, "govulncheck"},
+		{"renamed job", func(t *testing.T, s string) string {
 			return strings.Replace(s, "  govulncheck:\n", "  govulncheck:\n    name: security\n", 1)
 		}, "stable check name"},
-		{"matrix gap", func(s string) string {
+		{"matrix gap", func(t *testing.T, s string) string {
 			return strings.Replace(s, "os: [ubuntu-26.04, macos-26]", "os: [ubuntu-26.04]", 1)
 		}, "does not declare"},
 	}
@@ -170,7 +172,7 @@ func TestWorkflowRejectsTriggerPathAndJobGaps(t *testing.T) {
 		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
 			t.Parallel()
-			err := VerifyCIWorkflow(repositoryContract(t), []byte(tc.edit(string(workflow))))
+			err := VerifyCIWorkflow(repositoryContract(t), []byte(tc.edit(t, string(workflow))))
 			if err == nil || !strings.Contains(err.Error(), tc.want) {
 				t.Fatalf("error=%v want %q", err, tc.want)
 			}
@@ -227,4 +229,27 @@ func mutateRuleParameter(t *testing.T, ruleset *ObservedRuleset, ruleType, key s
 		return
 	}
 	t.Fatalf("rule %q not found", ruleType)
+}
+
+// withoutWorkflowTrigger keeps the negative fixture valid when an event gains
+// nested configuration. A syntax failure would not exercise the missing-event guard.
+func withoutWorkflowTrigger(t *testing.T, workflow, trigger string) string {
+	t.Helper()
+	var document map[string]any
+	if err := yaml.Unmarshal([]byte(workflow), &document); err != nil {
+		t.Fatal(err)
+	}
+	events, ok := document["on"].(map[string]any)
+	if !ok {
+		t.Fatal("workflow fixture has no event mapping")
+	}
+	if _, exists := events[trigger]; !exists {
+		t.Fatalf("workflow fixture has no %q event", trigger)
+	}
+	delete(events, trigger)
+	changed, err := yaml.Marshal(document)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return string(changed)
 }
