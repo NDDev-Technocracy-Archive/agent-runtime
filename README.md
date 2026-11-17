@@ -238,6 +238,8 @@ jobs remain independent and retain every existing build, test, static-analysis,
 fuzz, module, journal, governance and deterministic archive-reproduction gate.
 The shared merge stops guard pull requests; daily security reports stay separate.
 Source maintenance does not run an agent client or publish a release.
+The two exact historical redaction-fixture exceptions in .gitleaksignore identify
+synthetic rejected inputs; later occurrences and other files remain scanned.
 
 ```sh
 go test -race ./...
