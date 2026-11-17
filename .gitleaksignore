@@ -1,0 +1,5 @@
+# Only historical adversarial literals in TestRedactionPreventsNestedLeakageAndFormatterBypass.
+# The nested dummy password and reserved example.test URI are rejection inputs, not credentials.
+# Exact commit/path/rule/line identities keep all future occurrences in the scan. Refs #66.
+b67784e3c43480c3aae7996bd8e1dd5bf61b0513:observability/redaction_test.go:generic-credential-uri:28
+b67784e3c43480c3aae7996bd8e1dd5bf61b0513:observability/redaction_test.go:generic-password:24
